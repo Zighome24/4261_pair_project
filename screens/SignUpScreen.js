@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { URLSearchParams } from 'url-search-params';
 
 export default class SignUpScreen extends React.Component {
   state = { email: '', password: '', errorMessage: null };
@@ -9,12 +10,19 @@ export default class SignUpScreen extends React.Component {
     const { email, password } = this.state;
     handleLogin = () => {
       const { email, password } = this.state;
-      const body = {email: email, p_hash: password};
-      fetch(`${SERVER_ADDRESS}:${SERVER_PORT}/signup`, {
+      const data = new URLSearchParams();
+      data.append('email',email);
+      data.append('p_hash', password);
+      fetch(`${SERVER_ADDRESS}/signup`, {
         method: 'post',
-        body: JSON.stringify(body)
+        body: data.toString(),
+        headers: {
+          // "Content-Type": "application/json; charset=utf-8",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       }).then(response => {
         if (response.ok) {
+          console.log('received response');
           return response.json()
         } else {
           throw new Error('Something ain\'t right');

@@ -1,5 +1,5 @@
-const SERVER_ADDRESS = '192.168.1.12';
-const SERVER_PORT = '5575';
+const SERVER_ADDRESS = 'https://p-project-230210.appspot.com';
+const SERVER_PORT = '8080';
 
 const CUR_AUTH_USER = {
     email: '',

@@ -28,19 +28,6 @@ export default class WeatherScreen extends React.Component {
     );
   }
 
-  logWeather = () => {
-    fetch(
-      `${SERVER_ADDRESS}:${SERVER_PORT}/${CUR_AUTH_USER.uuid}/log?weather=${weatherCondition}&temperature=${temperature}`
-    ).then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      throw new Error('There was a network error with your request.');
-    }).then(json => {
-      console.log(json.totalLogs);
-    });
-  }
-
   fetchWeather(lat, lon) {
     fetch(
       `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${WEATHER_API_KEY}&units=imperial`
@@ -62,6 +49,10 @@ export default class WeatherScreen extends React.Component {
     });
   }
 
+  logWeather = () => {
+    
+  }
+
   render() {
     const { isLoading, weatherCondition, temperature } = this.state;
     return (
@@ -73,7 +64,19 @@ export default class WeatherScreen extends React.Component {
         ) : (
           <Weather weather={weatherCondition} temperature={temperature} />
         )}
-        <Button onPress={logWeather} title="Log the weather."/>
+        <Button onPress={ () => {
+            fetch(`${SERVER_ADDRESS}/${CUR_AUTH_USER.uuid}/log?weather=${weatherCondition}&temp=${temperature}`, {
+              method: 'put',
+            }).then(res => {
+            if (res.ok) {
+              return res.json();
+            }
+            throw new Error('There was a network error with your request.');
+            }).then(json => {
+              console.log(json);
+            })
+          }
+        } title="Log the weather."/>
       </View>
     );
   }
