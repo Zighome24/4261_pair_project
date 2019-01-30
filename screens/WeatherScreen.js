@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, Button, View, Text } from 'react-native';
 import Weather from '../components/Weather';
 import { WEATHER_API_KEY } from '../utils/WeatherAPIKey';
+import { SERVER_ADDRESS, SERVER_PORT, CUR_AUTH_USER } from '../utils/Const';
 
 export default class WeatherScreen extends React.Component {
   static navigationOptions = {
@@ -25,6 +26,19 @@ export default class WeatherScreen extends React.Component {
         });
       }
     );
+  }
+
+  logWeather = () => {
+    fetch(
+      `${SERVER_ADDRESS}:${SERVER_PORT}/${CUR_AUTH_USER.uuid}/log?weather=${weatherCondition}&temperature=${temperature}`
+    ).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error('There was a network error with your request.');
+    }).then(json => {
+      console.log(json.totalLogs);
+    });
   }
 
   fetchWeather(lat, lon) {
@@ -59,6 +73,7 @@ export default class WeatherScreen extends React.Component {
         ) : (
           <Weather weather={weatherCondition} temperature={temperature} />
         )}
+        <Button onPress={logWeather} title="Log the weather."/>
       </View>
     );
   }

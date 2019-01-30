@@ -3,29 +3,15 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import WeatherScreen from '../screens/WeatherScreen';
-import LogsScreen from '../screens/LogsScreen';
+import LoginScreen from '../screens/LoginScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 
-const WeatherStack = createStackNavigator({
-  Weather: WeatherScreen,
+const LoginStack = createStackNavigator({
+  Login: LoginScreen,
 });
 
-WeatherStack.navigationOptions = {
-  tabBarLabel: 'Weather',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-cloudy-night' : 'md-cloudy-night'}
-    />
-  ),
-};
-
-const LogStack = createStackNavigator({
-  Logs: LogsScreen,
-});
-
-LogStack.navigationOptions = {
-  tabBarLabel: 'Logs',
+LoginStack.navigationOptions = {
+  tabBarLabel: 'Login',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -34,8 +20,21 @@ LogStack.navigationOptions = {
   ),
 };
 
+const SignUpStack = createStackNavigator({
+  SignUp: SignUpScreen,
+});
+
+SignUpStack.navigationOptions = {
+  tabBarLabel: 'Sign up',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+    />
+  ),
+};
 
 export default createBottomTabNavigator({
-  WeatherStack,
-  LogStack
+  LoginStack,
+  SignUpStack
 });
