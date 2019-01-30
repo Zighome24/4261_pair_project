@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import { SERVER_ADDRESS, SERVER_PORT, CUR_AUTH_USER } from '../utils/Const'
-const URLSearchParams =require('url-search-params');
+const URLSearchParams = require('url-search-params');
 
 export default class LoginScreen extends React.Component {
   state = { email: '', password: '', errorMessage: null }
