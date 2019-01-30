@@ -37,7 +37,7 @@ export default class LoginScreen extends React.Component {
       } else {
         throw new Error(res_data.error_message);
       }
-    });
+    }).catch(err => console.log(err));
   }
 
   render() {
